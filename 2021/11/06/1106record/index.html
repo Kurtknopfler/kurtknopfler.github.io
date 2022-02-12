@@ -1,0 +1,184 @@
+<!DOCTYPE html><html lang="zh_CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>20211106刷题记录 | Moon</title><meta name="keywords" content="算法,LeetCode,DFS,BFS"><meta name="author" content="kurtknopfler"><meta name="copyright" content="kurtknopfler"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="DFS:排列数字n-皇后     深度优先搜索通常需要使用布尔值来记录某个元素是否被遍历过  深度优先搜索需要注意状态的回溯, 每当进入更深层的DFS时,需要在进入之前改变元素的遍历状态, 当从更深层DFS中弹出时, 需要将之前改变的元素状态复位; 对于n皇后之类的棋盘问题，可以考虑使用建立坐标系的方式构建直线来使用对角线、反对角线等辅助线来解题。   BFS:走迷宫八数码">
+<meta property="og:type" content="article">
+<meta property="og:title" content="20211106刷题记录">
+<meta property="og:url" content="https://kurtknopfler.github.io/2021/11/06/1106record/index.html">
+<meta property="og:site_name" content="Moon">
+<meta property="og:description" content="DFS:排列数字n-皇后     深度优先搜索通常需要使用布尔值来记录某个元素是否被遍历过  深度优先搜索需要注意状态的回溯, 每当进入更深层的DFS时,需要在进入之前改变元素的遍历状态, 当从更深层DFS中弹出时, 需要将之前改变的元素状态复位; 对于n皇后之类的棋盘问题，可以考虑使用建立坐标系的方式构建直线来使用对角线、反对角线等辅助线来解题。   BFS:走迷宫八数码">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
+<meta property="article:published_time" content="2021-11-05T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-02-12T05:26:41.849Z">
+<meta property="article:author" content="kurtknopfler">
+<meta property="article:tag" content="算法">
+<meta property="article:tag" content="LeetCode">
+<meta property="article:tag" content="DFS">
+<meta property="article:tag" content="BFS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://kurtknopfler.github.io/2021/11/06/1106record/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '20211106刷题记录',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2022-02-12 13:26:41'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.0.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data is-center"><div class="data-item"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">9</div></a></div><div class="data-item"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">26</div></a></div><div class="data-item"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">3</div></a></div></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Moon</a></span><div id="menus"><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">20211106刷题记录</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-11-05T16:00:00.000Z" title="Created 2021-11-06 00:00:00">2021-11-06</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2022-02-12T05:26:41.849Z" title="Updated 2022-02-12 13:26:41">2022-02-12</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="20211106刷题记录"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><blockquote>
+<p>DFS:<br><kbd><a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/844/">排列数字</a></kbd><br><kbd><a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/845/">n-皇后</a></kbd> </p>
+</blockquote>
+<hr>
+<ol>
+<li>深度优先搜索通常需要使用布尔值来记录某个元素是否被遍历过 </li>
+<li>深度优先搜索需要注意状态的回溯, 每当进入更深层的DFS时,需要在进入之前改变元素的遍历状态, 当从更深层DFS中弹出时, 需要将之前改变的元素状态复位;</li>
+<li>对于n皇后之类的棋盘问题，可以考虑使用建立坐标系的方式构建直线来使用对角线、反对角线等辅助线来解题。</li>
+</ol>
+<blockquote>
+<p>BFS:<br><kbd><a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/846/">走迷宫</a></kbd><br><kbd><a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/847/">八数码</a></kbd></p>
+</blockquote>
+<span id="more"></span>
+<hr>
+<ul>
+<li>广度优先遍历的通用模板:<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(队列不空)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">auto</span> t = 队头元素</span><br><span class="line">    遍历队头元素所能到达的元素，并加入队列中</span><br><span class="line">    并根据题目维护不同的额外信息</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">队列为空时，说明深度遍历已经结束</span><br></pre></td></tr></table></figure></li>
+<li>BFS中通常涉及到上下左右方向的枚举，可以直接使用两个数组dx dy来模拟</li>
+</ul>
+<hr>
+<blockquote>
+<p>树和图的DFS:<br><kbd><a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/848/">数的重心</a></kbd></p>
+<p>树和图的BFS:<br><kbd><a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/849/">图中点的层次</a></kbd></p>
+</blockquote>
+<hr>
+<ol>
+<li>树和图的存储方式有邻接表和邻接矩阵两种，稀疏图可以使用邻接表，稠密图则需要使用邻接矩阵存储</li>
+<li>邻接表模板:<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> h[N], e[N], ne[N], idx;</span><br><span class="line"><span class="built_in">memset</span>(h, <span class="number">-1</span>, <span class="keyword">sizeof</span> h);</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">add</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    e[idx] = b;</span><br><span class="line">    ne[idx] = h[a];</span><br><span class="line">    h[a] = idx ++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>遍历模板(DFS 与 BFS 类似):<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i = h[u]; i != <span class="number">-1</span>; i = ne[i])</span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> j = e[i];</span><br><span class="line">    <span class="comment">// 根据DFS BFS的不同，使用不同的具体策略</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<hr>
+<blockquote>
+<p>拓扑排序:<br><kbd><a target="_blank" rel="noopener" href="https://www.acwing.com/problem/content/850/">有向图的拓扑序列</a></kbd></p>
+</blockquote>
+<ul>
+<li>在拓扑排序中，需要借助出度、入度的概念维护相应的信息，并借此通过BFS解题。</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">kurtknopfler</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://kurtknopfler.github.io/2021/11/06/1106record/">https://kurtknopfler.github.io/2021/11/06/1106record/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%AE%97%E6%B3%95/">算法</a><a class="post-meta__tags" href="/tags/LeetCode/">LeetCode</a><a class="post-meta__tags" href="/tags/DFS/">DFS</a><a class="post-meta__tags" href="/tags/BFS/">BFS</a></div><div class="post_share"><div class="social-share" data-image="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/11/18/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE%E4%B9%8B%E4%B8%80/"><img class="prev-cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">云服务器配置之一</div></div></a></div><div class="next-post pull-right"><a href="/2021/11/05/1105record/"><img class="next-cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">20211105刷题记录</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2021/11/30/dijkstra_spfa_bf%E7%AE%97%E6%B3%95%E6%A8%A1%E6%9D%BF%E5%8F%8A%E5%8C%BA%E5%88%AB/" title="Dijkstra SPFA Bellman_ford三种图论算法的模板、应用场景及区别"><img class="cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-11-30</div><div class="title">Dijkstra SPFA Bellman_ford三种图论算法的模板、应用场景及区别</div></div></a></div><div><a href="/2021/11/05/1105record/" title="20211105刷题记录"><img class="cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-11-05</div><div class="title">20211105刷题记录</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">kurtknopfler</div><div class="author-info__description">Stairs to Top</div></div><div class="card-info-data is-center"><div class="card-info-data-item"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">9</div></a></div><div class="card-info-data-item"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">26</div></a></div><div class="card-info-data-item"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">3</div></a></div></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/02/12/%E8%AE%B0%E5%BD%95/%E6%89%AB%E6%8F%8F%E7%BA%BF%E6%B3%95/" title="No title"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="No title"/></a><div class="content"><a class="title" href="/2022/02/12/%E8%AE%B0%E5%BD%95/%E6%89%AB%E6%8F%8F%E7%BA%BF%E6%B3%95/" title="No title">No title</a><time datetime="2022-02-12T05:16:56.262Z" title="Created 2022-02-12 13:16:56">2022-02-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/02/10/%E8%AE%B0%E5%BD%95/%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%E4%B8%8E%E7%BA%BF%E6%AE%B5%E6%A0%91/" title="线段树与树状数组"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="线段树与树状数组"/></a><div class="content"><a class="title" href="/2022/02/10/%E8%AE%B0%E5%BD%95/%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%E4%B8%8E%E7%BA%BF%E6%AE%B5%E6%A0%91/" title="线段树与树状数组">线段树与树状数组</a><time datetime="2022-02-09T16:00:00.000Z" title="Created 2022-02-10 00:00:00">2022-02-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/29/%E5%91%A8%E8%B5%9B/20220129_acw%E5%91%A8%E8%B5%9B/" title="20220129_AcWing周赛记录"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="20220129_AcWing周赛记录"/></a><div class="content"><a class="title" href="/2022/01/29/%E5%91%A8%E8%B5%9B/20220129_acw%E5%91%A8%E8%B5%9B/" title="20220129_AcWing周赛记录">20220129_AcWing周赛记录</a><time datetime="2022-01-28T16:00:00.000Z" title="Created 2022-01-29 00:00:00">2022-01-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/24/csapp/chapter1/csapp_cahpter1/" title="CSAPP第一章笔记"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CSAPP第一章笔记"/></a><div class="content"><a class="title" href="/2022/01/24/csapp/chapter1/csapp_cahpter1/" title="CSAPP第一章笔记">CSAPP第一章笔记</a><time datetime="2022-01-23T16:00:00.000Z" title="Created 2022-01-24 00:00:00">2022-01-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/12/26/chapter1/" title="Java期末复习之基础概念一"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Java期末复习之基础概念一"/></a><div class="content"><a class="title" href="/2021/12/26/chapter1/" title="Java期末复习之基础概念一">Java期末复习之基础概念一</a><time datetime="2021-12-25T16:00:00.000Z" title="Created 2021-12-26 00:00:00">2021-12-26</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By kurtknopfler</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
