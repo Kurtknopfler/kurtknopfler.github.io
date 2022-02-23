@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>线段树与树状数组</title>
+      <link href="/2022/02/10/%E8%AE%B0%E5%BD%95/%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%E4%B8%8E%E7%BA%BF%E6%AE%B5%E6%A0%91/"/>
+      <url>/2022/02/10/%E8%AE%B0%E5%BD%95/%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84%E4%B8%8E%E7%BA%BF%E6%AE%B5%E6%A0%91/</url>
+      
+        <content type="html"><![CDATA[<p>树状数组与线段树都是非常强大的数据结构，在很多算法题中得到应用，因此需要进行掌握。</p><h4 id="题目特征"><a href="#题目特征" class="headerlink" title="题目特征"></a>题目特征</h4><ul><li><strong>单点更新</strong></li><li><strong>区间查询</strong><br>一般来讲，需要求上述问题的解时，常常会用到<em>线段树</em>或<em>树状数组</em></li></ul><p>需要注意的是，<strong>区间求和</strong>问题还可以用<strong>前缀和</strong>来进行求解，但是<strong>前缀和</strong>的局限之处在于其前缀和数组在初始化之后就固定了，每当更新其中某一个点的信息时，需要重复更新整个前缀和数组，有过多的冗余计算，因此遇到动态更新区间内的点时，无法使用前缀和来进行求解。</p><h4 id="树状数组"><a href="#树状数组" class="headerlink" title="树状数组"></a>树状数组</h4><p>树状数组使用一维数组来表示，结构与操作十分简单，但是其原理证明十分复杂</p><p>树状数组在结构上将数据分为若干层： <strong>数组下标从 1 开始，其二进制表示中有多少个 0 ，就视其为第几层</strong></p><p>这种结构划分使得树状数组从原本普通的一维线性数组变成了一种具有树状层次的数据结构</p><p>而在此划分的基础上，所有第 0 层位置存储的是其原来的数据，所有大于 0 层的位置存放的数据是在此位置之前且尚未被统计过的数据之和</p><h4 id="线段树"><a href="#线段树" class="headerlink" title="线段树"></a>线段树</h4><p><strong>操作</strong>：</p><ul><li>push up: 利用子结点的信息来更新当前节点的信息</li><li>build: 在一段区间上初始化线段树</li><li>modify: 单点修改操作</li><li>query: 区间查询操作</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 学习记录 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 刷题 </tag>
+            
+            <tag> 数据结构 </tag>
+            
+            <tag> 蓝桥杯 </tag>
+            
+            <tag> 线段树 </tag>
+            
+            <tag> 树状数组 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>20220129_AcWing周赛记录</title>
+      <link href="/2022/01/29/%E5%91%A8%E8%B5%9B/20220129_acw%E5%91%A8%E8%B5%9B/"/>
+      <url>/2022/01/29/%E5%91%A8%E8%B5%9B/20220129_acw%E5%91%A8%E8%B5%9B/</url>
+      
+        <content type="html"><![CDATA[<p>本周周赛未能按时参加，因此本篇仅作题目的思考记录以及分析，不涉及成绩总结。</p><h5 id="第一题-处理字符串"><a href="#第一题-处理字符串" class="headerlink" title="第一题:处理字符串"></a>第一题:<a href="https://www.acwing.com/problem/content/4218/">处理字符串</a></h5><p><strong>题目描述:</strong></p><pre><code>给定一个由大小写字母构成的字符串，请你对该字符串进行如下处理：- 将所有大写字母替换为相应的小写字母。- 删除其中的所有元音字母。- 在每个辅音字母前面插入一个 .。字母 a，o，y，e，u，i 为元音字母，其余字母均为辅音字母。注意，y 其实是半元音字母，在本题中规定其为元音字母。</code></pre><p>本题是惯例的签到题，无难度，直接按照题目给定的要求来做即可，代码如下：</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    string s;</span><br><span class="line">    cin &gt;&gt; s; <span class="comment">//输入</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; s.<span class="built_in">size</span>(); i ++) <span class="comment">// 转换为小写</span></span><br><span class="line">        s[i] = <span class="built_in">tolower</span>(s[i]);</span><br><span class="line">        </span><br><span class="line">    string res = <span class="string">&quot;&quot;</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; s.<span class="built_in">size</span>(); i ++) <span class="comment">//删去元音并在其余字符前添加 &#x27;.&#x27;</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">char</span> t = s[i];</span><br><span class="line">        <span class="keyword">if</span>( t == <span class="string">&#x27;a&#x27;</span> || t == <span class="string">&#x27;e&#x27;</span> || t == <span class="string">&#x27;i&#x27;</span> || t == <span class="string">&#x27;o&#x27;</span> || t == <span class="string">&#x27;u&#x27;</span> || t == <span class="string">&#x27;y&#x27;</span>)</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            res += <span class="string">&#x27;.&#x27;</span>;</span><br><span class="line">            res += s[i];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    cout &lt;&lt; res &lt;&lt; endl; <span class="comment">// 输出答案</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h5 id="第二题：图中的环"><a href="#第二题：图中的环" class="headerlink" title="第二题：图中的环"></a>第二题：<a href="https://www.acwing.com/problem/content/4219/">图中的环</a></h5><p><strong>题目描述:</strong></p><pre><code>给定一个 n 个点 m 条边的无向图。点的编号从 1 到 n。图中不含重边和自环。请你对给定图进行判断，如果该图是一个有且仅有一个环的连通图，则输出 YES，否则输出 NO。</code></pre>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 笔试 </tag>
+            
+            <tag> 刷题 </tag>
+            
+            <tag> 周赛 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>CSAPP第一章笔记</title>
+      <link href="/2022/01/24/csapp/chapter1/csapp_cahpter1/"/>
+      <url>/2022/01/24/csapp/chapter1/csapp_cahpter1/</url>
+      
+        <content type="html"><![CDATA[<h3 id="计算机系统漫游"><a href="#计算机系统漫游" class="headerlink" title="计算机系统漫游"></a>计算机系统漫游</h3><p>全书第一章以一种高层次的角度展示了计算机系统的复杂与精巧。简单介绍了计算机的组成、信息的本质、程序的执行过程、计算机软件与硬件如何联系、处理器的工作内容等一些主要涉及计算机内部系统的内容。</p><hr><h4 id="计算机中的信息"><a href="#计算机中的信息" class="headerlink" title="计算机中的信息"></a>计算机中的信息</h4><p>在计算机中，所有的信息都按照二进制(0 和 1)来存储, 称为位(bit), 所有的数字、字符、操作，都按照一定的位序列来排列，计算机能够根据位序列的不同识别不同的符号。<br>所以，所有保存在计算机中的信息对于计算机来说都仅仅是一连串位序列而已，是上下文的顺序赋予了其独特的、人类赋予其的含义。</p><h4 id="程序编译的过程"><a href="#程序编译的过程" class="headerlink" title="程序编译的过程"></a>程序编译的过程</h4><ul><li>hello.c 是我们编写的代码，称为源程序或源代码</li><li><strong>预处理阶段</strong> 预处理器(cpp)根据 hello.c 源代码，向原本的代码中加入头文件引入的地方，将文件存储为 hello.i</li><li><strong>编译阶段</strong>  编译器(ccl) 将 hello.i 翻译为 hello.s，包含一个汇编程序</li><li><strong>汇编阶段</strong> 汇编器(as) 将 hello.s 翻译为机器语言指令， 存储为 hello.o</li><li><strong>链接阶段</strong> 在程序中使用的 C 标准库中的函数可以被连接器(ld) 合并至 hello.o 文件中，最终得到可执行文件 hello</li></ul><h4 id="程序执行的过程"><a href="#程序执行的过程" class="headerlink" title="程序执行的过程"></a>程序执行的过程</h4><p>在编译完成后，我们会得到一个可执行文件 hello</p><ol><li>在执行这个文件时，我们会将文件名通过<strong>键盘</strong>读入计算机中，此时shell 程序将我们输入的字符逐个读取至寄存器，最后统一存放至主存中</li><li>当输入结束时，shell 程序开始加载可执行的 hello 文件。通过一系列指令将hello 目标文件中的代码和数据从磁盘中复制到主存之中</li><li>当所有数据都加载至主存中之后，处理器开始执行 hello 文件中 <strong>main</strong> 程序中的机器语言指令。这些指令将程序输出结果从主存复制到寄存器文件中，最后从寄存器文件中复制到屏幕上，完成整个程序的执行过程。</li></ol><h4 id="高速缓存"><a href="#高速缓存" class="headerlink" title="高速缓存"></a>高速缓存</h4><p>通过程序的执行过程，我们可以看到计算机系统花费大量的时间去计算程序，最终将程序结果输出，这其中涉及到大量的信息搬运(即复制)过程。因此，提高程序运行效率的一个重要方式就是要使得这些搬运过程尽可能地快速、高效。<br>因此，使用高速缓存存储器(cache memory) 来存放近期可能会处理的数据可以避免程序从磁盘等地低效的读取数据，从而极大程度上提高程序的性能。</p><h4 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h4><p>操作系统是一种软件，作用于应用程序与硬件之间。<br>操作系统有两个主要作用：</p><ol><li>防止硬件被失控的应用程序滥用</li><li>向应用程序提供简单且一致的机制来控制复杂并且通常大不相同的硬件设备</li></ol><p>上述的两种功能是操作系统通过三个基本的抽象概念来实现的：<strong>进程</strong>、<strong>虚拟内存</strong>、<strong>文件</strong></p><ul><li><strong>进程</strong><br>进程操作系统对一个正在运行的应用程序的抽象。<br>一个系统上可以同时运行多个进程，每个进程看似独占的使用CPU<br>当一个进程和另一个进程的指令在 CPU 中交错执行时，称这种现象为 <strong>并发运行</strong><br>在绝大多数情况下，一个系统需要运行的进程数目时绝对大于其CPU个数的，而不论在多核系统还是单核系统中，一个CPU都可以看上去同时执行多个程序，这种现象是通过处理器在进程间进行<strong>上下文切换</strong>来实现的<br><strong>进程的切换</strong>是由操作系统 <strong>内核(kernel)</strong> 管理的，内核是操作系统常驻主存的部分</li><li><strong>线程</strong><br><strong>线程</strong>是进程的组成单元，是<strong>进程</strong>的执行单元<br>线程运行于进程的<strong>上下文</strong>之中，所有的线程共享同样的代码与全局数据</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 学习记录 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> CSAPP </tag>
+            
+            <tag> 操作系统 </tag>
+            
+            <tag> 计算机基础 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>LeetCode 31.下一个排列 题解</title>
+      <link href="/2022/01/13/%E9%A2%98%E8%A7%A3/LC_31_%E4%B8%8B%E4%B8%80%E4%B8%AA%E6%8E%92%E5%88%97/"/>
+      <url>/2022/01/13/%E9%A2%98%E8%A7%A3/LC_31_%E4%B8%8B%E4%B8%80%E4%B8%AA%E6%8E%92%E5%88%97/</url>
+      
+        <content type="html"><![CDATA[<h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>整数数组的一个 排列  就是将其所有成员以序列或线性顺序排列。</p><p>例如，arr &#x3D; [1,2,3] ，以下这些都可以视作 arr 的排列：[1,2,3]、[1,3,2]、[3,1,2]、[2,3,1] 。<br>整数数组的 下一个排列 是指其整数的下一个字典序更大的排列。更正式地，如果数组的所有排列根据其字典顺序从小到大排列在一个容器中，那么数组的 下一个排列 就是在这个有序容器中排在它后面的那个排列。如果不存在下一个更大的排列，那么这个数组必须重排为字典序最小的排列（即，其元素按升序排列）。</p><p>例如，arr &#x3D; [1,2,3] 的下一个排列是 [1,3,2] 。<br>类似地，arr &#x3D; [2,3,1] 的下一个排列是 [3,1,2] 。<br>而 arr &#x3D; [3,2,1] 的下一个排列是 [1,2,3] ，因为 [3,2,1] 不存在一个字典序更大的排列。<br>给你一个整数数组 nums ，找出 nums 的下一个排列。</p><p>必须 原地 修改，只允许使用额外常数空间。</p><h4 id="样例"><a href="#样例" class="headerlink" title="样例"></a>样例</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：nums = [1,2,3]</span><br><span class="line">输出：[1,3,2]</span><br></pre></td></tr></table></figure><hr><h3 id="算法1"><a href="#算法1" class="headerlink" title="算法1"></a>算法1</h3><h5 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h5><p>为了找到下一个排列，我们需要对序列的性质进行分析：</p><p>何为最小的下一个排列？ </p><p>如果我们将一个排列视为一个数字，此时从排列的左至右，可以视为数字的高位至低位</p><p>那么为了找到大于当前数字的最小数字，我们需要保证数字的高位尽可能不调整，调整低位的数字。</p><p>因此，可以从后往前遍历数列，找到从后往前第一个发生数列下降的位置 k。</p><p>此时，将 k - 1 处的值视为 x， 我们需要在 k - 1 之后的位置中找到一个大于 x 的最小值，将其与 x 互换位置，随后将 k - 1 之后的序列逆序即可</p><h5 id="正确性"><a href="#正确性" class="headerlink" title="正确性"></a>正确性</h5><p>为什么这个算法是正确的呢？</p><p>首先，我们能够保证排列的高位是尽可能不做调整的，我们找到的是整个序列中升序和降序的交界点，那么此时交界点（设为 k）之前是升序排列的，交界点之后是降序排列的，明显交界点的位置是整个序列的最大值。</p><p>那么，此时如果我们将 k 处的值向前交换，那么明显会得到更大的排列，但是很显然不一定能够得到最小的排列。<br>因此，我们需要在 k 之后寻找一个大于 k - 1 处值的最小值并交换。</p><p>此时，我们可以保证 k 之前的序列已经是最小的了，那么序列之后的呢？</p><p>由于我们交换了大于 k - 1 的最小值，交换之后的序列明显也是降序的， 那么为了得到最小的下一个排列，我们可以将 k - 1 之后降序的序列翻转，可以得到升序序列，即可得到最小的下一个排列</p><h4 id="时间复杂度-O-n"><a href="#时间复杂度-O-n" class="headerlink" title="时间复杂度  $O(n)$"></a>时间复杂度  $O(n)$</h4><h4 id="C-代码"><a href="#C-代码" class="headerlink" title="C++ 代码"></a>C++ 代码</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">nextPermutation</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> k = nums.<span class="built_in">size</span>() - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span>( k &gt; <span class="number">0</span> &amp;&amp; nums[k] &lt;= nums[k - <span class="number">1</span>]) k --;</span><br><span class="line">        <span class="keyword">if</span>( k &lt;= <span class="number">0</span>) <span class="built_in">reverse</span>(nums.<span class="built_in">begin</span>(), nums.<span class="built_in">end</span>()); <span class="comment">// 特殊情况，如果整个序列是降序的，说明此时的序列是最大排列，将其转化为最小序列</span></span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// 此时 k 所在的位置，就是从数列开头的升序最后一个位置</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">// 在 t 的位置后面找到比其前一个位置稍大一点的数，交换位置即可</span></span><br><span class="line"></span><br><span class="line">             <span class="comment">// 由于 t 之前是升序排列， t 之后是降序排列，因此将 t 之前一个位置交换之其后的那个位置后，后面的序列至少不会变化，此时再将 t 之后的序列逆序，即可得到下一个排列</span></span><br><span class="line">            <span class="type">int</span> t = k;</span><br><span class="line">            <span class="keyword">while</span>( t &lt; nums.<span class="built_in">size</span>() &amp;&amp; nums[t] &gt; nums[k - <span class="number">1</span>]) t ++;</span><br><span class="line">            <span class="built_in">swap</span>(nums[k - <span class="number">1</span>], nums[t - <span class="number">1</span>]);</span><br><span class="line">            <span class="built_in">reverse</span>(nums.<span class="built_in">begin</span>() + k, nums.<span class="built_in">end</span>());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 题解 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> LeetCode </tag>
+            
+            <tag> 笔试 </tag>
+            
+            <tag> 刷题 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Java期末复习之基础概念一</title>
+      <link href="/2021/12/26/chapter1/"/>
+      <url>/2021/12/26/chapter1/</url>
+      
+        <content type="html"><![CDATA[<h3 id="JAVA复习——第一章"><a href="#JAVA复习——第一章" class="headerlink" title="JAVA复习——第一章"></a>JAVA复习——第一章</h3><h4 id="1-1-计算机、程序和Java概述"><a href="#1-1-计算机、程序和Java概述" class="headerlink" title="1.1 计算机、程序和Java概述"></a>1.1 计算机、程序和Java概述</h4><hr><h5 id="计算机概述"><a href="#计算机概述" class="headerlink" title="计算机概述"></a>计算机概述</h5><ul><li>计算机是<strong>存储</strong> 和 <strong>处理</strong>数据的电子设备</li><li>计算机包括<strong>硬件(Hardware)</strong> 和 <strong>软件(Software)</strong> 两部分</li><li>一般来说，<strong>硬件</strong>指计算机中<strong>可见</strong>的物理部分，即对于人类来说可以在现实世界中看到、触摸到的实体。通常来讲，计算机的硬件主要有如下几种：<ul><li>中央处理器(CPU)</li><li>内存</li><li>存储设备(用来存储计算机中的数据)</li><li>输入设备(用来让人类想计算机中输入数据)</li><li>输出设备(用来展示计算机中的数据)</li><li>通信设备(用来与互联网、其他计算机连接)<br>  <img src="/1_1.png" alt="1_1"></li><li>上述计算机中的硬件借助总线(bus)实现互联</li><li>在一般计算机中，总线搭建在<strong>主板</strong>上，而主板是一块连接计算机各个部分的电路板</li></ul></li><li>软件则是一些<strong>指令</strong>，用来操控计算机</li></ul><h5 id="硬件概述"><a href="#硬件概述" class="headerlink" title="硬件概述"></a>硬件概述</h5><ul><li><p><strong>中央处理器(Central Processing Unit, CPU)<strong>，是计算机的核心和大脑，负责从计算机</strong>内存</strong>获取并执行指令</p><ul><li>关于<strong>时钟</strong><ul><li>CPU内部的<strong>时钟</strong>以固定的速度发射<strong>电子脉冲</strong></li><li><strong>电子脉冲</strong>用于控制和同步计算机各种操作的步调</li><li><strong>时钟</strong>速度越快，表示在单位时间内执行的指令越多</li><li><strong>时钟</strong>速度的计量单位是<strong>赫兹(hertz, Hz)</strong>, 一赫兹相当于每秒钟发射一个电子脉冲，目前的CPU运行速度都是GHz级别</li></ul></li><li>关于<strong>核</strong><ul><li><strong>核(core)</strong> 是CPU内部实现指令读取以及执行的部分，目前的CPU中包含多个核，每个核之间相互独立</li></ul></li></ul></li><li><p><strong>比特与字节</strong></p><ul><li>比特(bit), 在计算机中又称为<strong>位</strong>，表示二进制数</li><li>字节(byte)，是计算机中最小的存储单元，每个字节由<strong>8个比特</strong>构成</li><li>在计算机存储系统中，小写<strong>b</strong>表示比特(bit)，大写<strong>B</strong>表示字节(byte)</li></ul></li><li><p><strong>内存</strong></p><ul><li>计算机的内存是一个有序的字节序列，用来存储计算机程序以及程序<strong>运行时</strong>需要的数据</li><li>这意味着，计算机大部分数据平时存储于计算机的<strong>存储设备</strong>中，每当程序需要运行时，才会将所需要的顺序读取进入到内存中</li><li>在内存中，每一个字节都有一个<strong>唯一的地址</strong>，使用这个地址就可以确定该字节在内存中的具体位置，方便存储和获取数据</li><li>由于内存可以按照任意顺序读取字节，因此内存也被称为<strong>随机访问存储器(Random-Access Memory, RAM)</strong></li><li>在内存中的字节其内容永远<strong>非空</strong>，但是其内容有可能是没有任何意义的</li><li><strong>内存(RAM)</strong> 是一种非常容易丢失的数据保存形式，每当断电时，储存在内存中的信息就将会永久丢失</li><li>计算机程序和数据平时放在<strong>存储设备</strong>中，每当需要使用时才会从计算机存储设备中加载进入<strong>内存</strong>中</li><li>CPU从内存中读取数据比从存储设备中读取数据<strong>快</strong>很多</li></ul></li><li><p><strong>编程语言</strong></p><ul><li>关于<strong>机器语言</strong><ul><li><strong>机器语言</strong> 是指计算机能够理解的语言，即计算机<strong>内嵌的基本指令集</strong>，机器语言因计算机的类型的不同而有所差异</li><li><strong>机器语言</strong>都是以二进制的形式来存储的，并且必须以二进制代码输入指令</li></ul></li><li>关于<strong>汇编语言</strong><ul><li><strong>汇编语言</strong>是早期的变成语言，非常接近机器语言，并且使用汇编语言需要了解CPU如何工作</li><li><strong>汇编语言</strong>使用<strong>助记符</strong>表示每一条机器语言指令</li><li>由于计算机不理解<strong>汇编语言</strong>，需要借助<strong>汇编器</strong>将汇编语言程序转换为机器代码<br><img src="/1_2.png" alt="1_2"></li></ul></li></ul></li><li><p><strong>高级语言</strong></p><ul><li><strong>高级语言</strong>更加接近于人类可理解的语言</li><li>使用<strong>高级语言</strong>编写的程序称为<strong>源代码(Source code)<strong>或</strong>源程序(Source program)</strong></li><li>高级语言借助<strong>解释器</strong>或<strong>编译器</strong>来运行</li><li><strong>解释器</strong>逐行从源代码中读取语句，每读取一行就将其<strong>翻译</strong>成为机器代码并立即执行<br><img src="/1_3.png" alt="1_3"></li><li><strong>编译器</strong>将整个源代码<strong>翻译</strong>成为机器代码文件，并执行该文件<br><img src="/1_4.png" alt="1_4"></li></ul></li><li><p><strong>操作系统</strong></p><ul><li><strong>操作系统</strong>是<strong>软件</strong>，是运行在计算机上的<strong>程序</strong></li><li><strong>操作系统</strong>可以<strong>管理</strong>和<strong>控制</strong>计算机的活动</li><li><strong>操作系统</strong>的主要任务：<ul><li><strong>控制</strong>和<strong>监视</strong>系统任务</li><li><strong>分配</strong>和<strong>调配</strong>系统资源</li><li><strong>调度操作</strong><ul><li><strong>多道程序设计(multiprogramming)<strong>允许多个程序</strong>共享</strong>同一个CPU<strong>同时</strong>运行</li><li><strong>多线程</strong>允许<strong>单个程序</strong>同时执行<strong>多个任务</strong></li><li><strong>多处理</strong>使用<strong>多个处理器</strong>来<strong>并行</strong>运行<strong>多个程序</strong></li></ul></li></ul></li></ul></li></ul><h5 id="Java概述"><a href="#Java概述" class="headerlink" title="Java概述"></a>Java概述</h5><ul><li><strong>JDK(Java Development Toolkit)<strong>是用于</strong>开发</strong>和<strong>运行</strong>Java程序的软件</li><li><strong>JRE(Java Runtime Environment)<strong>是</strong>运行</strong>Java程序的<strong>程序</strong></li><li>Java源文件的扩展名为 <strong>.java</strong>, 通过编译器编译后生成<strong>字节码</strong>文件，扩展名为 <strong>.class</strong>, 最后由<strong>JVM java虚拟机</strong>来读取和解释以及执行</li><li><strong>JVM， java虚拟机</strong>是一个用来解释java字节码的程序，因此所有安装了JVM的平台都可以随意运行java程序<br><img src="/1_5.png" alt="1_5"></li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> Java </tag>
+            
+            <tag> 复习 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Dijkstra SPFA Bellman_ford三种图论算法的模板、应用场景及区别</title>
+      <link href="/2021/11/30/dijkstra_spfa_bf%E7%AE%97%E6%B3%95%E6%A8%A1%E6%9D%BF%E5%8F%8A%E5%8C%BA%E5%88%AB/"/>
+      <url>/2021/11/30/dijkstra_spfa_bf%E7%AE%97%E6%B3%95%E6%A8%A1%E6%9D%BF%E5%8F%8A%E5%8C%BA%E5%88%AB/</url>
+      
+        <content type="html"><![CDATA[<font size = 4><blockquote><p>Dijkstra:</p></blockquote><blockquote><p><kbd><a href="https://www.acwing.com/problem/content/851/">Dijkstra求最短路 I</a></kbd></p><p><kbd><a href="https://www.acwing.com/problem/content/852/">Dijkstra求最短路 II</a></kbd> </p></blockquote></font><hr><ul><li><font size = 4>朴素Dijkstra的算法思想:</li></ul><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">dijkstra</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">memset</span>(dist, <span class="number">0x3f</span>, <span class="keyword">sizeof</span> dist); <span class="comment">// 初始化，将图中所有的点距离初始为 负无穷，随后在 dijkstra 的算法过程中更新最短距离;</span></span><br><span class="line">    dist[<span class="number">1</span>] = <span class="number">0</span>; <span class="comment">// 在这里将 标号为 1 的点距离初始为0， 表示 1 号点到 1 号点的距离为 0;</span></span><br><span class="line">    st[<span class="number">1</span>] = <span class="literal">true</span>; <span class="comment">// 表示</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i ++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> t = <span class="number">-1</span>; <span class="comment">// 寻找当前集合中距离最小的点</span></span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">        根据 dijkstra 的定义，很容易知道，第一次循环一定会找到 1 号点， 随后根据 1 号点的距离更新其余点的值</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">1</span>; j &lt;= n; j ++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>( !st[j] &amp;&amp; ( t == <span class="number">-1</span> || dist[t] &gt; dist[j])) <span class="comment">// 如果说当前的点 j 尚未被遍历过，并且 </span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></font><blockquote><p>BFS:</p><p><kbd><a href="https://www.acwing.com/problem/content/846/">走迷宫</a></kbd></p><p><kbd><a href="https://www.acwing.com/problem/content/847/">八数码</a></kbd></p></blockquote><span id="more"></span><hr><ul><li><font size = 4>广度优先遍历的通用模板:<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(队列不空)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">auto</span> t = 队头元素</span><br><span class="line">    遍历队头元素所能到达的元素，并加入队列中</span><br><span class="line">    并根据题目维护不同的额外信息</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">队列为空时，说明深度遍历已经结束</span><br></pre></td></tr></table></figure></li><li>BFS中通常涉及到上下左右方向的枚举，可以直接使用两个数组dx dy来模拟</li></ul><hr><blockquote><p>树和图的DFS:<br><kbd><a href="https://www.acwing.com/problem/content/848/">数的重心</a></kbd></p><p>树和图的BFS:<br><kbd><a href="https://www.acwing.com/problem/content/849/">图中点的层次</a></kbd></p></blockquote><hr><ol><li><font size = 4>树和图的存储方式有邻接表和邻接矩阵两种，稀疏图可以使用邻接表，稠密图则需要使用邻接矩阵存储</li><li>邻接表模板:<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> h[N], e[N], ne[N], idx;</span><br><span class="line"><span class="built_in">memset</span>(h, <span class="number">-1</span>, <span class="keyword">sizeof</span> h);</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">add</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;   </span><br><span class="line">    e[idx] = b;</span><br><span class="line">    ne[idx] = h[a];</span><br><span class="line">    h[a] = idx ++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li><li>遍历模板(DFS 与 BFS 类似):<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i = h[u]; i != <span class="number">-1</span>; i = ne[i])</span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> j = e[i];</span><br><span class="line">    <span class="comment">// 根据DFS BFS的不同，使用不同的具体策略</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li></ol><hr><blockquote><p>拓扑排序:<br><kbd><a href="https://www.acwing.com/problem/content/850/">有向图的拓扑序列</a></kbd></p></blockquote><ul><li>在拓扑排序中，需要借助出度、入度的概念维护相应的信息，并借此通过BFS解题。</li></ul></font>]]></content>
+      
+      
+      <categories>
+          
+          <category> 刷题 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 算法 </tag>
+            
+            <tag> LeetCode </tag>
+            
+            <tag> DFS </tag>
+            
+            <tag> BFS </tag>
+            
+            <tag> Dijkstra </tag>
+            
+            <tag> SPFA </tag>
+            
+            <tag> Bellman_ford </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>云服务器配置之一</title>
+      <link href="/2021/11/18/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE%E4%B9%8B%E4%B8%80/"/>
+      <url>/2021/11/18/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE%E4%B9%8B%E4%B8%80/</url>
+      
+        <content type="html"><![CDATA[<p>以阿里云 ECS 服务器，搭载 Ubuntu 20.04系统为例，分享我在使用服务器时的一些配置</p><h2 id="添加子用户"><a href="#添加子用户" class="headerlink" title="添加子用户"></a>添加子用户</h2><p>购买了阿里云服务之之后，系统会分配给我们 <em>root</em> 用户的权限。但是在开发过程中，可能出现误操作删除某些配置、系统文件而导致服务器崩溃的现象。</p><p>因此日常的代码开发应当在 <em>子用户</em> 中进行，防止误操作而删除某些关键文件。</p><h5 id="配置子用户步骤如下："><a href="#配置子用户步骤如下：" class="headerlink" title="配置子用户步骤如下："></a>配置子用户步骤如下：</h5><ul><li>以 <em>root</em> 用户登入服务器</li><li>终端中输入 <code>adduser NewUsername</code></li><li>随后按照提示操作即可添加新的子用户</li></ul><p>需要注意的是，此时添加的子用户并不具有 <em>sudo</em> 权限, 因此要给新加入的用户添加 <em>sudo</em> 权限</p><h5 id="添加-sudo-权限："><a href="#添加-sudo-权限：" class="headerlink" title="添加 sudo 权限："></a>添加 <em>sudo</em> 权限：</h5><ul><li>首先输入 <code>cd ..</code> 回到根目录</li><li>在根目录中输入 <code>cd etc/sudoers.d/</code> 进入 <em>sudo</em> 权限配置文档</li><li>使用 <code>vim</code> 命令创建文件，不需要加入后缀名</li><li>在新创建的文件中输入 <code>Username ALL=(ALL) ALL</code> 保存后退出</li></ul><p>经过上述操作，成功在云服务器上添加了具有 <em>sudo</em> 权限的子用户，以后就不用登陆 <em>root</em> 用户进行开发了，直接在此处开发即可</p><h2 id="配置-SSH-免密登录"><a href="#配置-SSH-免密登录" class="headerlink" title="配置 SSH 免密登录"></a>配置 SSH 免密登录</h2><p>使用阿里云时，每次进入服务器都要<code>进入网页-&gt;登陆账号-&gt;进入服务器</code>，步骤繁琐且麻烦，可以考虑配置 SSH 免密登录来登入云服务器</p><ul><li>进入 <code>c:\User\你的用户名\.ssh</code> 中</li><li>在此目录下输入命令 (需要linux系统， 若使用的是Win，可以使用 Git Bash等其余工具) <code>ssh genkey</code>，来生成本机的 ssh 密钥</li><li>生成结束后，可以在 <code>.ssh</code> 文件夹中看到 <code>id_rsa</code> ,<code>id_rsa.pub</code>等文件，其中 <code>id_rsa</code> 是属于个人的私钥，不要透露给别人， 而<code>id_rsa.pub</code>是本地的公钥，可以共享给别的服务器，达到免密登录的效果</li><li>接下来给我们的云服务器重命名: 输入<code>vim config</code>, 在 <code>.ssh</code>文件夹中创建config文件</li><li>在 config 中输入<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Host myserver // &#x27;myserver&#x27;就是我们云服务器的别名，可以任意取</span><br><span class="line">    HostName xx.xxx.xxx.xx //hostname后的内容即为云服务器的公网 ip</span><br><span class="line">    User username  // username 就是登录至云服务器的用户名，设置为上一步新建的用户</span><br></pre></td></tr></table></figure></li><li>配置好之后，输入 <code>ssh-copy-id myserver</code> 即可远端一键配置 ssh免密登录</li></ul><p>在配置好免密登录后， 在本地终端中 <code>ssh myserver</code> 即可一键登陆云服务器进行开发啦！<br>Enjoy it ！</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 学习记录 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Linux </tag>
+            
+            <tag> 云服务器 </tag>
+            
+            <tag> SSH </tag>
+            
+            <tag> tmux </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>20211106刷题记录</title>
+      <link href="/2021/11/06/1106record/"/>
+      <url>/2021/11/06/1106record/</url>
+      
+        <content type="html"><![CDATA[<blockquote><p>DFS:<br><kbd><a href="https://www.acwing.com/problem/content/844/">排列数字</a></kbd><br><kbd><a href="https://www.acwing.com/problem/content/845/">n-皇后</a></kbd> </p></blockquote><hr><ol><li>深度优先搜索通常需要使用布尔值来记录某个元素是否被遍历过 </li><li>深度优先搜索需要注意状态的回溯, 每当进入更深层的DFS时,需要在进入之前改变元素的遍历状态, 当从更深层DFS中弹出时, 需要将之前改变的元素状态复位;</li><li>对于n皇后之类的棋盘问题，可以考虑使用建立坐标系的方式构建直线来使用对角线、反对角线等辅助线来解题。</li></ol><blockquote><p>BFS:<br><kbd><a href="https://www.acwing.com/problem/content/846/">走迷宫</a></kbd><br><kbd><a href="https://www.acwing.com/problem/content/847/">八数码</a></kbd></p></blockquote><span id="more"></span><hr><ul><li>广度优先遍历的通用模板:<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(队列不空)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">auto</span> t = 队头元素</span><br><span class="line">    遍历队头元素所能到达的元素，并加入队列中</span><br><span class="line">    并根据题目维护不同的额外信息</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">队列为空时，说明深度遍历已经结束</span><br></pre></td></tr></table></figure></li><li>BFS中通常涉及到上下左右方向的枚举，可以直接使用两个数组dx dy来模拟</li></ul><hr><blockquote><p>树和图的DFS:<br><kbd><a href="https://www.acwing.com/problem/content/848/">数的重心</a></kbd></p><p>树和图的BFS:<br><kbd><a href="https://www.acwing.com/problem/content/849/">图中点的层次</a></kbd></p></blockquote><hr><ol><li>树和图的存储方式有邻接表和邻接矩阵两种，稀疏图可以使用邻接表，稠密图则需要使用邻接矩阵存储</li><li>邻接表模板:<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> h[N], e[N], ne[N], idx;</span><br><span class="line"><span class="built_in">memset</span>(h, <span class="number">-1</span>, <span class="keyword">sizeof</span> h);</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">add</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    e[idx] = b;</span><br><span class="line">    ne[idx] = h[a];</span><br><span class="line">    h[a] = idx ++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li><li>遍历模板(DFS 与 BFS 类似):<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i = h[u]; i != <span class="number">-1</span>; i = ne[i])</span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> j = e[i];</span><br><span class="line">    <span class="comment">// 根据DFS BFS的不同，使用不同的具体策略</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li></ol><hr><blockquote><p>拓扑排序:<br><kbd><a href="https://www.acwing.com/problem/content/850/">有向图的拓扑序列</a></kbd></p></blockquote><ul><li>在拓扑排序中，需要借助出度、入度的概念维护相应的信息，并借此通过BFS解题。</li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 算法 </tag>
+            
+            <tag> LeetCode </tag>
+            
+            <tag> DFS </tag>
+            
+            <tag> BFS </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>20211105刷题记录</title>
+      <link href="/2021/11/05/1105record/"/>
+      <url>/2021/11/05/1105record/</url>
+      
+        <content type="html"><![CDATA[<blockquote><p>Trie 树:<br><kbd><a href="https://www.acwing.com/problem/content/837/">字符串统计</a></kbd><br><kbd><a href="https://www.acwing.com/problem/content/145/">最大异或对</a></kbd> </p><p>并查集:<br><kbd><a href="https://www.acwing.com/problem/content/838/">合并集合</a></kbd><br><kbd><a href="https://www.acwing.com/problem/content/839/">连通块中点的数量</a></kbd><br><kbd><a href="https://www.acwing.com/problem/content/242/">食物链</a></kbd></p><p>堆:<br><kbd><a href="https://www.acwing.com/problem/content/841/">模拟堆</a></kbd></p><p>哈希:<br><kbd><a href="https://www.acwing.com/problem/content/842/">模拟散列表</a></kbd><br><kbd><a href="https://www.acwing.com/problem/content/843/">字符串哈希</a></kbd></p></blockquote><hr><ol><li>并查集中可以维护额外的信息来解决题目</li><li>模拟堆需要对常规的堆实现任意位置的插入以及删除操作，需要使用额外的映射来维护插入点的顺序</li><li>模拟散列表常用的有两种方法，分别是拉链法与开放寻址法<ul><li>拉链法:散列表中存放的是链表，出现冲突时在对应位置的链表中插入;</li><li>开放寻址法: 散列表为数据大小的2-3倍，当出现重复时，像其后位置依次寻找，若发现空位置则插入;</li></ul></li></ol>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 算法 </tag>
+            
+            <tag> LeetCode </tag>
+            
+            <tag> 堆 </tag>
+            
+            <tag> 哈希 </tag>
+            
+            <tag> 并查集 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+  
+  
+</search>
