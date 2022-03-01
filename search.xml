@@ -118,6 +118,35 @@
     
     
     <entry>
+      <title>LeetCode 50.Pow(x, n) 题解</title>
+      <link href="/2022/01/16/%E9%A2%98%E8%A7%A3/LC_50_Pow(x,n)/"/>
+      <url>/2022/01/16/%E9%A2%98%E8%A7%A3/LC_50_Pow(x,n)/</url>
+      
+        <content type="html"><![CDATA[<h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p><a href="https://leetcode-cn.com/problems/powx-n/">题目链接</a></p><p>实现 pow(x, n) ，即计算 x 的 n 次幂函数（即，xn ）。</p><h4 id="样例"><a href="#样例" class="headerlink" title="样例"></a>样例</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">示例 1：</span><br><span class="line"></span><br><span class="line">输入：x = 2.00000, n = 10</span><br><span class="line">输出：1024.00000</span><br></pre></td></tr></table></figure><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">示例 2：</span><br><span class="line"></span><br><span class="line">输入：x = 2.10000, n = 3</span><br><span class="line">输出：9.26100</span><br></pre></td></tr></table></figure><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">示例 3：</span><br><span class="line"></span><br><span class="line">输入：x = 2.00000, n = -2</span><br><span class="line">输出：0.25000</span><br><span class="line">解释：2-2 = 1/22 = 1/4 = 0.25</span><br></pre></td></tr></table></figure><hr><h3 id="算法1"><a href="#算法1" class="headerlink" title="算法1"></a>算法1</h3><h4 id="快速幂-O-logn"><a href="#快速幂-O-logn" class="headerlink" title="(快速幂)  $O(logn)$"></a>(快速幂)  $O(logn)$</h4><p>如果每次乘以一个 x 来求 x 的 n 次幂的话，那么需要线性的时间，当 n 特别大时，明显效率过低，因此可以二进制的思想将 n 预处理</p><p>思路：</p><ul><li>借助二进制的思想， n 的二进制表示就表明了 n 可以由 2 的多少次幂组成，那么我们可以预处理 $2^0, 2^1, 2^2 …. $ </li><li>整体的时间复杂度将会缩减至 $logn$</li></ul><h4 id="C-代码"><a href="#C-代码" class="headerlink" title="C++ 代码"></a>C++ 代码</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">double</span> <span class="title">myPow</span><span class="params">(<span class="type">double</span> x, <span class="type">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> LL;</span><br><span class="line">        <span class="type">bool</span> is_minus = n &lt; <span class="number">0</span>; <span class="comment">// 如果幂为负数， 先按照正数计算最后求其倒数即可</span></span><br><span class="line">        <span class="type">double</span> res = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>( LL k = <span class="built_in">abs</span>((LL) n); k ; k &gt;&gt;= <span class="number">1</span>) <span class="comment">// 从 k 的第零位开始枚举，看当前位置是否为 1，若为1则应乘上 x^(2^i)</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>( k &amp; <span class="number">1</span>) </span><br><span class="line">                res *= x;</span><br><span class="line">            x *= x;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>( is_minus) res = <span class="number">1</span> / res;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 题解 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> LeetCode </tag>
+            
+            <tag> 刷题 </tag>
+            
+            <tag> 笔试 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>LeetCode 71.简化路径 题解</title>
       <link href="/2022/01/15/%E9%A2%98%E8%A7%A3/LC_71_%E7%AE%80%E5%8C%96%E8%B7%AF%E5%BE%84/"/>
       <url>/2022/01/15/%E9%A2%98%E8%A7%A3/LC_71_%E7%AE%80%E5%8C%96%E8%B7%AF%E5%BE%84/</url>
