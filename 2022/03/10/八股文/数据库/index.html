@@ -1,0 +1,523 @@
+<!DOCTYPE html><html lang="zh_CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>数据库知识梳理 | Moon</title><meta name="keywords" content="面试,数据库,记录"><meta name="author" content="kurtknopfler"><meta name="copyright" content="kurtknopfler"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="数据库基础知识   数据库范式  1NF: 属性不可再分割 2NF：1NF基础之上，消除非主属性对于码的部分函数依赖 3NF：2NF基础之上，消除了非主属性对于码的传递函数依赖    drop、delete、truncate区别 用法不同  drop(丢弃数据)：drop table 表名，直接删除整张表 truncate(清空数据)：truncate table 表名，清空表中的数据 delet">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据库知识梳理">
+<meta property="og:url" content="https://kurtknopfler.github.io/2022/03/10/%E5%85%AB%E8%82%A1%E6%96%87/%E6%95%B0%E6%8D%AE%E5%BA%93/index.html">
+<meta property="og:site_name" content="Moon">
+<meta property="og:description" content="数据库基础知识   数据库范式  1NF: 属性不可再分割 2NF：1NF基础之上，消除非主属性对于码的部分函数依赖 3NF：2NF基础之上，消除了非主属性对于码的传递函数依赖    drop、delete、truncate区别 用法不同  drop(丢弃数据)：drop table 表名，直接删除整张表 truncate(清空数据)：truncate table 表名，清空表中的数据 delet">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://kurtknopfler.github.io/pictures/1.jpg">
+<meta property="article:published_time" content="2022-03-09T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-05-18T04:22:03.054Z">
+<meta property="article:author" content="kurtknopfler">
+<meta property="article:tag" content="面试">
+<meta property="article:tag" content="数据库">
+<meta property="article:tag" content="记录">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kurtknopfler.github.io/pictures/1.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://kurtknopfler.github.io/2022/03/10/%E5%85%AB%E8%82%A1%E6%96%87/%E6%95%B0%E6%8D%AE%E5%BA%93/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?0d01901a23ec22a1dd80a1524d808bd7";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"We didn't find any results for the search: ${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '数据库知识梳理',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-05-18 12:22:03'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.0.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data is-center"><div class="data-item"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">40</div></a></div><div class="data-item"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">30</div></a></div><div class="data-item"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">4</div></a></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/pictures/1.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Moon</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">数据库知识梳理</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-03-09T16:00:00.000Z" title="Created 2022-03-10 00:00:00">2022-03-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2022-05-18T04:22:03.054Z" title="Updated 2022-05-18 12:22:03">2022-05-18</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="数据库知识梳理"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="数据库基础知识">数据库基础知识</h2>
+<ol>
+<li>
+<p>数据库范式</p>
+<ul>
+<li>1NF: 属性不可再分割</li>
+<li>2NF：1NF基础之上，消除非主属性对于码的部分函数依赖</li>
+<li>3NF：2NF基础之上，消除了非主属性对于码的传递函数依赖</li>
+</ul>
+</li>
+<li>
+<p>drop、delete、truncate区别<br>
+用法不同</p>
+<ul>
+<li>drop(丢弃数据)：<code>drop table 表名</code>，直接删除整张表</li>
+<li>truncate(清空数据)：<code>truncate table 表名</code>，清空表中的数据</li>
+<li>delete(删除数据)：<code>delete from 表名 where 列名=值</code>， 删除某一列数据，如果不加 where 字句的话，与 truncate 类似</li>
+</ul>
+<p>truncate 和不带 where 子句的 delete、以及 drop 都会删除表内的数据，但是 <strong>truncate 和 delete 只删除数据不删除表的结构(定义)，执行 drop 语句，此表的结构也会删除，也就是执行 drop 之后对应的表不复存在</strong></p>
+ <br>
+<p>属于不同的数据库语言</p>
+<ul>
+<li>trucate 和 drop 属于 DDL(数据定义语言)，语句，操作立即生效，原数据不放到 rollback segment中，不可回滚，操作不触发 trigger</li>
+<li>delete 属于 DML(数据库操作语言)，操作会放到 rollback segment 中，事务提交后才生效<br>
+<br></li>
+</ul>
+</li>
+<li>
+<p>DML 语句与 DDL 区别</p>
+<ul>
+<li>DML 是数据库操作语言(Data Manipulation Language)， 指对数据库中表记录的操作，包括增、删、改、查</li>
+<li>DDL 是数据库定义语言(Data Definition Language)，指对数据库内部的对象进行增、删、改的语言</li>
+<li>两者最大的区别是，DML一般只修改表中的数据，不修改表的定义、结构，而DDL则会对这些进行修改</li>
+<li>同时 DML 对表的修改需要添加到 rollback segment中，可以回滚，事务提交之后才生效，而DDL则不需要添加，立即生效，不可回滚<br>
+<br></li>
+</ul>
+</li>
+</ol>
+<h3 id="MySQL知识点：">MySQL知识点：</h3>
+<ol>
+<li>
+<p>关系型数据库<br>
+关系型数据库是建立在<strong>关系模型</strong>基础上的数据库，关系模型表明了数据库中存储的数据之间的关系(一对一，一对多，多对多)<br>
+在关系型数据库中，数据被存放在各种表中，表的每一行存放着一条数据<br>
+<br></p>
+</li>
+<li>
+<p>MyISAM 和 InnoDB的区别</p>
+<ul>
+<li>MySQL5.5之前使用的存储引擎是MyISAM，之后换为了InnoDB</li>
+<li>MyISAM <strong>不支持事务和行级锁</strong>，崩溃之后无法安全恢复</li>
+<li>从是否支持行级锁来看
+<ul>
+<li>MyISAM 只支持表级锁</li>
+<li>InnoDB 支持行级锁和表级锁，默认为行级锁</li>
+</ul>
+</li>
+<li>从是否支持事务来看
+<ul>
+<li>MyISAM 不提供事务支持</li>
+<li>InnoDB 提供事务支持，既有提交和回滚事务的能力</li>
+</ul>
+</li>
+<li>从是否支持外键来看
+<ul>
+<li>MyISAM 不支持外键</li>
+<li>InnoDB 支持外键</li>
+</ul>
+</li>
+<li>从崩溃后能否安全回复来看
+<ul>
+<li>MyISAM 不支持崩溃后的安全恢复</li>
+<li>InnoDB 通过 <code>redo log</code> 实现崩溃后的安全恢复</li>
+</ul>
+</li>
+<li>从是否支持 MVCC来看
+<ul>
+<li>MyISAM 不支持</li>
+<li>InnoDB 支持<br>
+<br></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>InnoDB 如何实现 ACID</p>
+<ul>
+<li>通过 <code>redo log</code> 实现事务的持久性</li>
+<li>通过 <code>undo log</code> 实现事务的原子性</li>
+<li>通过 <strong>锁机制</strong> 、<strong>MVCC</strong> 来保证事务的隔离性</li>
+<li>持久性、原子性、隔离性保证之后，一致性得到保证<br>
+<br></li>
+</ul>
+</li>
+<li>
+<p>表级锁与行级锁的对比</p>
+<ul>
+<li>表级锁：MySQL 锁定 <strong>粒度最大</strong> 的一种锁，对当前操作的整张表进行加锁，实现简单，资源消耗比较少，加锁快，不会出现死锁，锁定粒度最大，出发锁冲突的概率最高，并发度很低</li>
+<li>行级锁：MySQL 锁定 <strong>粒度最小</strong> 的一种锁，对当前操作的行进行加锁，行级锁大大减小数据库操作的冲突，并发度很高，但是开销较大，加锁慢，可能会出现死锁<br>
+<br></li>
+</ul>
+</li>
+<li>
+<p>InnoDB 锁算法</p>
+<ul>
+<li>Record lock： 记录锁，单个行记录上的锁</li>
+<li>Gap lock： 间隙锁，锁定一个范围，不包括记录本身</li>
+<li>Next-key lock： record + gap 临键锁，锁定一个范围，可以包括记录本身<br>
+<br></li>
+</ul>
+</li>
+<li>
+<p>什么是事务</p>
+<ul>
+<li>事务是逻辑上的<strong>一组</strong>操作，要么都执行，要么都不执行<br>
+<br></li>
+</ul>
+</li>
+<li>
+<p>什么是数据库事务</p>
+<ul>
+<li>数据库事务可以保证多个对数据库的操作构成一个逻辑上的整体，<strong>这些操作要么全部成功执行，要么都不执行</strong><br>
+<br></li>
+</ul>
+</li>
+<li>
+<p>数据库 ACID 特性</p>
+<ul>
+<li>原子性： 事务是最小的执行单位，不允许继续分割，原子性确保动作要么全部成功，要么都不起作用</li>
+<li>一致性： 执行事务前后，数据保持一致</li>
+<li>隔离性： 并发访问数据库时，一个用户的事务不被其他事务所干扰，各个并发事务之间数据库应该是独立的</li>
+<li>持久性： 一个事务被提交之后，对数据库中数据的改变是持久的，即使数据库发生故障也不应该对数据有任何影响<br>
+<br></li>
+</ul>
+</li>
+<li>
+<p>数据事务的实现原理是什么</p>
+<ul>
+<li>以 InnoDB 为例，即 InnoDB 实现ACID的原理<br>
+<br></li>
+</ul>
+</li>
+<li>
+<p>并发事务带来了哪些问题</p>
+<ul>
+<li>脏读：<br>
+一个事务正在访问某个数据并且对其进行了修改，这种修改尚未提交到数据库中，此时另外一个事务同样访问到当前的数据并使用了当前这个数据，由于当前数据尚未提交，因此第二个事务读取到的是<strong>脏数据</strong>，此时根据<strong>脏数据</strong>所做的操作极有可能是不正确的</li>
+<li>丢失修改：<br>
+在一个事务读取一个数据时，另外一个事务同样访问到该数据。在第一个事务修改了数据，尚未提交时，第二个事务同样对数据进行了修改，那么此时第一个事务对数据的修改就丢失了</li>
+<li>不可重复读：<br>
+在一个事务内多次重复读取同一个数据，在第一个事务尚未结束时，另一个事务访问到这个数据并对其进行了修改并提交，那么第一个事务在第二个事务提交之后读到的数据与其之前读到的数据是不同的，即会出现同一事务两次读取到的同一个数据不一致的情况</li>
+<li>幻读：<br>
+与不可重复读类似，在第一个事务读取了部分数据后，另一个并发事务插入了新的数据，随后第一个事务再次读取数据时发现多出了一些之前并不存在的记录，称为幻读<br>
+<br></li>
+</ul>
+</li>
+<li>
+<p>不可重复读与幻读的区别</p>
+<ul>
+<li>不可重复读：重点是<strong>修改</strong>，即在读取时发现某些记录被修改</li>
+<li>幻读：重点是<strong>添加或删除</strong>，即在读取时发现之前的数据丢失或多出来之前并不存在的数据<br>
+<br></li>
+</ul>
+</li>
+<li>
+<p>事务隔离级别有哪些</p>
+<ul>
+<li>READ-UNCOMMITTED(读取未提交)：最低的隔离级别，允许读取尚未提交的数据变更，可能会导致脏读、幻读、不可重复读</li>
+<li>READ-COMMITTED(读取已提交)：允许读取并发事务已经提交的数据，<strong>可以阻止脏读，但不能阻止幻读、不可重复读</strong></li>
+<li>REPEATED-READ(可重复读)：对同一字段的多次读取结果都是一致的，除非数据被自己本身的事务所修改，<strong>可以阻止脏读、不可重复读，但有可能发生幻读</strong></li>
+<li>SERIAIZABLE(可串行化)：最高的隔离级别，完全服从ACID，所有事物依次逐个执行，这样所有事物之间就不会发生干扰，即<strong>该级别可以防止脏读、不可重复读、幻读</strong><br>
+<br></li>
+</ul>
+</li>
+<li>
+<p>MySQL 的默认隔离级别是什么</p>
+<ul>
+<li>InnoDB 的默认隔离级别是：REPEATED-READ(可重复读)<br>
+<br></li>
+</ul>
+</li>
+</ol>
+<h3 id="MySQL-索引详解">MySQL 索引详解</h3>
+<hr>
+<ol>
+<li>
+<p>何为索引，有什么用</p>
+<ul>
+<li><strong>索引是一种用于快速查询和检索数据的数据结构，产检的索引结构有：B树，B+树 和 Hash</strong><br>
+<br></li>
+</ul>
+</li>
+<li>
+<p>索引的优缺点</p>
+<ul>
+<li>优点：
+<ul>
+<li>索引可以大大加快数据的检索速度</li>
+<li>通过创建唯一索引，可以保证数据表中每一行数据的唯一性</li>
+</ul>
+</li>
+<li>缺点：
+<ul>
+<li>创建索引和维护索引需要耗费大量时间，当对表中增删改的时候，如果数据有索引，那么索引也需要动态修改，会降低 SQL 执行的效率</li>
+<li>不仅数据库的表需要使用物理空间来存储，索引同样需要物理空间来进行存储，也会耗费一定的空间<br>
+<br></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>索引的底层数据结构</p>
+<ul>
+<li>
+<p>Hash表<br>
+哈希表是键值对(key-value)的集合，通过键可以快速取出对应的值，因此哈希表可以快速检索数据</p>
+</li>
+<li>
+<p>为什么MySQL 不使用哈希表作为索引的数据结构呢</p>
+<ul>
+<li>哈希表会有哈希冲突问题</li>
+<li>哈希索引不支持顺序以及范围查找<br>
+<br></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>B 树 &amp; B+ 树有什么异同之处呢</p>
+<ul>
+<li>B 树又称 B - 树，全称为<strong>多路平衡查找树</strong>， B+树是 B 树的一种变体</li>
+<li>B树的叶子节点都是独立的，B+树的叶子节点中有一条引用链指向与它相邻的叶子节点</li>
+<li>B树 的所有结点既存放key也存放value，而 B+ 树只有叶子节点存放key 和 data， 其他的内节点只存放 key</li>
+<li>B树 的检索过程相当于对范围内的每个节点的关键字做二分查找，可能尚未达到叶子节点检索就结束了，而 B+树检索效率很稳定，任何查找都是从根节点到叶子结点的过程，叶子节点的顺序检索很明显<br>
+<br></li>
+</ul>
+</li>
+</ol>
+<h3 id="索引类型">索引类型</h3>
+<hr>
+<ol>
+<li>
+<p>主键索引(Primary Key)</p>
+<p>数据表的主键列使用的就是主键索引，一张数据表只能有一个主键，并且主键不能为空，不能重复<br>
+<br></p>
+</li>
+<li>
+<p>二级索引(辅助索引)<br>
+二级索引又称为辅助索引，是因为二级索引的叶子节点存储的数据是主键，即是说，通过二级索引，可以确定主键的位置</p>
+<p>常见的二级索引有：前缀索引，普通索引，唯一索引</p>
+<ul>
+<li>唯一索引(Unique Key):<br>
+唯一索引也是一种约束，唯一索引的属性列不能出现重复的数据，但是允许数据为空，一张表允许创建多个唯一索引，建立唯一索引的目的是为了该属性列的唯一性</li>
+<li>普通索引(Index):<br>
+普通索引的唯一目的就是为了加快查询数据，一张表允许创建多个普通索引，并且允许数据重复和空</li>
+<li>前缀索引(Prefix): 前缀索引只适用于字符串类型的数据，是对文本的前几个字符创建索引，相比普通索引建立的数据更小</li>
+<li>全文索引(Full Text)：全文索引主要是为了检索大文本数据中关键字的信息，是目前搜索引擎数据库中使用的一种技术<br>
+<br></li>
+</ul>
+</li>
+<li>
+<p>聚集索引<br>
+<strong>聚集索引即索引结构和数据一起存放的索引</strong><br>
+主键索引属于聚集索引<br>
+在 MySQL 中，InnoDB 引擎的表的 <code>.ibd</code>文件就包含了该表的索引和数据，对于 InnoDB 引擎表来说，表中的索引(B+树)的每个非叶子节点存储索引，叶子节点存储索引和数据</p>
+<p><strong>聚集索引的优点：</strong></p>
+<ul>
+<li>聚集索引的查询速度很快，因为B+树本身就是多叉平衡树，叶子节点也是有序的，因此定位到索引的节点就相当于定位到了数据</li>
+</ul>
+<p><strong>聚集索引的缺点：</strong></p>
+<ul>
+<li>依赖于有序的数据：<br>
+由于B+树是多路平衡树，如果索引的数据不是有序的，那么需要在插入时对其进行排序，如果数据是较难排序的类型，那么插入和查找时的效率就会受到影响</li>
+<li>更新代价大：<br>
+如果索引列的数据被修改，那么对应的索引也需要被修改，并且，由于聚集索引的叶子节点存放着数据，因此修改的代价比较大，因此主键索引一般不允许修改<br>
+<br></li>
+</ul>
+</li>
+<li>
+<p>非聚集索引<br>
+<strong>非聚集索引就是将索引和数据分开存放的索引， 二级索引属于非聚集索引</strong><br>
+非聚集索引的叶子节点并不一定存放数据的指针，因为二级索引的叶子节点存放的本来就是主键，根据主键返回数据表中查找数据</p>
+<p><strong>非聚集索引的优点</strong></p>
+<ul>
+<li>更新代价比聚集索引小<br>
+<strong>非聚集索引的缺点</strong></li>
+<li>非聚集索引同样依赖于有序的数据</li>
+<li>可能会二次查询(回表)：<br>
+在非聚集索引中查到对应的索引和主键之后，可能还需要根据指针、主键返回到数据文件、表中进行查询<br>
+<br></li>
+</ul>
+</li>
+<li>
+<p>覆盖索引<br>
+<strong>覆盖索引即需要查询的字段正好是索引的字段，那么根据索引就可以直接查到数据，不需要回表查询</strong><br>
+<br></p>
+</li>
+<li>
+<p>非聚集索引一定回表吗<br>
+不一定，如果是覆盖索引，那么就不需要回表查询，查到的索引对应的值就是目标值<br>
+<br></p>
+</li>
+<li>
+<p>创建索引的注意事项</p>
+<ul>
+<li>选择合适的字段创建索引
+<ul>
+<li>不为NULL的字段</li>
+<li>被频繁查询的字段</li>
+<li>被作为条件查询的字段</li>
+<li>频繁需要排序的字段</li>
+<li>被经常频繁用于连接的字段</li>
+</ul>
+</li>
+<li>被频繁更新的字段应该慎重建立索引</li>
+<li>尽可能考虑建立联合索引而不是单列索引</li>
+<li>注意避免冗余索引</li>
+<li>考虑在字符串类型的字段上使用前缀索引代替普通索引<br>
+<br></li>
+</ul>
+</li>
+<li>
+<p>一致性非锁定读与锁定读</p>
+<ul>
+<li>**一致性非锁定读(Consistent Nonlocking Reads)**的实现通常做法是加一个版本号或者时间戳字段，在更新数据的同时版本号 + 1 或者更新时间戳，查询时，将当前可见的版本号对应记录的版本号进行比对，如果记录的版本小于可见版本，则表示该记录可见</li>
+<li>InnoDB 存储引擎中，多版本控制(Multi Versioning)就是对非锁定读的实现，如果读取的行正在执行<code>UPDATE</code>或<code>DELETE</code>操作，这时读取操作不会等待行上锁的释放，相反，InnoDB会去读取行的一个<strong>快照数据</strong>，这种读取历史数据的方式称为<strong>快照读(snapshot read)</strong></li>
+<li>在可重复读与读已提交两个隔离级别下，如果执行<code>select</code>，则会使用<code>一致性非锁定读(MVCC)</code>，并且在<code>可重复读</code>下<code>MVCC</code>实现了可重复读和防止部分幻读<br>
+<br></li>
+</ul>
+</li>
+<li>
+<p>InnoDB 对于 MVCC 的实现</p>
+<ul>
+<li>MVCC 的实现依赖于：
+<ul>
+<li>隐藏字段</li>
+<li>Read View</li>
+<li>undo log<br>
+<br></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="MySQL-基础架构分析">MySQL 基础架构分析</h3>
+<ol>
+<li>
+<p>MySQL 基本架构概览<br>
+简单来说 MySQL 主要分为 Server层和存储引擎层</p>
+<ul>
+<li>Server层：
+<ul>
+<li>连接器: 登录 MySQL时的身份认证和权限相关</li>
+<li>查询缓存: 执行查询语句时，会首先查询缓存</li>
+<li>分析器：如果没有命中缓存的话，就会由分析器来检查SQL语句是否正确</li>
+<li>优化器：按照MySQL认为最优的方案进行查询</li>
+</ul>
+</li>
+<li>存储引擎：<br>
+主要负责数据的存储和读取<br>
+<br></li>
+</ul>
+</li>
+<li></li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">kurtknopfler</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://kurtknopfler.github.io/2022/03/10/%E5%85%AB%E8%82%A1%E6%96%87/%E6%95%B0%E6%8D%AE%E5%BA%93/">https://kurtknopfler.github.io/2022/03/10/%E5%85%AB%E8%82%A1%E6%96%87/%E6%95%B0%E6%8D%AE%E5%BA%93/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E9%9D%A2%E8%AF%95/">面试</a><a class="post-meta__tags" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><a class="post-meta__tags" href="/tags/%E8%AE%B0%E5%BD%95/">记录</a></div><div class="post_share"><div class="social-share" data-image="/pictures/1.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/03/12/%E9%A2%98%E8%A7%A3/LC_124_%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E5%A4%A7%E8%B7%AF%E5%BE%84%E5%92%8C/"><img class="prev-cover" src="/pictures/4.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">LeetCode 124.二叉树的最大路径和</div></div></a></div><div class="next-post pull-right"><a href="/2022/03/02/%E9%A2%98%E8%A7%A3/LC_139_%E5%8D%95%E8%AF%8D%E5%88%86%E5%89%B2/"><img class="next-cover" src="/pictures/15.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">LeetCode 139.单词分割 题解</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">kurtknopfler</div><div class="author-info__description">Stairway to Top</div></div><div class="card-info-data is-center"><div class="card-info-data-item"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">40</div></a></div><div class="card-info-data-item"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">30</div></a></div><div class="card-info-data-item"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">4</div></a></div></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-number">1.</span> <span class="toc-text">数据库基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MySQL%E7%9F%A5%E8%AF%86%E7%82%B9%EF%BC%9A"><span class="toc-number">1.1.</span> <span class="toc-text">MySQL知识点：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MySQL-%E7%B4%A2%E5%BC%95%E8%AF%A6%E8%A7%A3"><span class="toc-number">1.2.</span> <span class="toc-text">MySQL 索引详解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.3.</span> <span class="toc-text">索引类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MySQL-%E5%9F%BA%E7%A1%80%E6%9E%B6%E6%9E%84%E5%88%86%E6%9E%90"><span class="toc-number">1.4.</span> <span class="toc-text">MySQL 基础架构分析</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/03/20/%E9%A2%98%E8%A7%A3/ACW_841_%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%93%88%E5%B8%8C/" title="AcWing 841.字符串哈希 题解"><img src="/pictures/4.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AcWing 841.字符串哈希 题解"/></a><div class="content"><a class="title" href="/2022/03/20/%E9%A2%98%E8%A7%A3/ACW_841_%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%93%88%E5%B8%8C/" title="AcWing 841.字符串哈希 题解">AcWing 841.字符串哈希 题解</a><time datetime="2022-03-19T16:00:00.000Z" title="Created 2022-03-20 00:00:00">2022-03-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/18/%E9%A2%98%E8%A7%A3/LC_152_%E4%B9%98%E7%A7%AF%E6%9C%80%E5%A4%A7%E5%AD%90%E6%95%B0%E7%BB%84/" title="LeetCode 862.和至少为k的最短子数组 题解"><img src="/pictures/1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="LeetCode 862.和至少为k的最短子数组 题解"/></a><div class="content"><a class="title" href="/2022/03/18/%E9%A2%98%E8%A7%A3/LC_152_%E4%B9%98%E7%A7%AF%E6%9C%80%E5%A4%A7%E5%AD%90%E6%95%B0%E7%BB%84/" title="LeetCode 862.和至少为k的最短子数组 题解">LeetCode 862.和至少为k的最短子数组 题解</a><time datetime="2022-03-17T16:00:00.000Z" title="Created 2022-03-18 00:00:00">2022-03-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/18/%E9%A2%98%E8%A7%A3/LC_269_%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" title="LeetCode 236.滑动窗口最大值 题解"><img src="/pictures/1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="LeetCode 236.滑动窗口最大值 题解"/></a><div class="content"><a class="title" href="/2022/03/18/%E9%A2%98%E8%A7%A3/LC_269_%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/" title="LeetCode 236.滑动窗口最大值 题解">LeetCode 236.滑动窗口最大值 题解</a><time datetime="2022-03-17T16:00:00.000Z" title="Created 2022-03-18 00:00:00">2022-03-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/18/%E9%A2%98%E8%A7%A3/LC_486_%E9%A2%84%E6%B5%8B%E8%B5%A2%E5%AE%B6/" title="LeetCode 236.滑动窗口最大值 题解"><img src="/pictures/4.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="LeetCode 236.滑动窗口最大值 题解"/></a><div class="content"><a class="title" href="/2022/03/18/%E9%A2%98%E8%A7%A3/LC_486_%E9%A2%84%E6%B5%8B%E8%B5%A2%E5%AE%B6/" title="LeetCode 236.滑动窗口最大值 题解">LeetCode 236.滑动窗口最大值 题解</a><time datetime="2022-03-17T16:00:00.000Z" title="Created 2022-03-18 00:00:00">2022-03-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/15/%E9%A2%98%E8%A7%A3/LC_126_%E5%8D%95%E8%AF%8D%E6%8E%A5%E9%BE%99II/" title="LeetCode 126.单词接龙 II 题解"><img src="/pictures/12.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="LeetCode 126.单词接龙 II 题解"/></a><div class="content"><a class="title" href="/2022/03/15/%E9%A2%98%E8%A7%A3/LC_126_%E5%8D%95%E8%AF%8D%E6%8E%A5%E9%BE%99II/" title="LeetCode 126.单词接龙 II 题解">LeetCode 126.单词接龙 II 题解</a><time datetime="2022-03-14T16:00:00.000Z" title="Created 2022-03-15 00:00:00">2022-03-15</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By kurtknopfler</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Local search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/contrib/copy-tex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/contrib/copy-tex.css"><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    btf.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
